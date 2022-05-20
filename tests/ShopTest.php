@@ -11,9 +11,13 @@ class ShopTest extends WebTestCase
     private KernelBrowser $client;
     private Faker\Generator $faker;
 
+    private const BEARER = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+
     public function setUp(): void
     {
-        $this->client = static::createClient();
+        $this->client = static::createClient([
+            'Authorization' => 'Bearer '.self::BEARER,
+        ]);
         $this->faker = Faker\Factory::create();
     }
 
@@ -32,7 +36,10 @@ class ShopTest extends WebTestCase
             '/shop/create',
             [],
             [],
-            ['Content-Type' => 'application/json'],
+            [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer '.self::BEARER,
+            ],
             json_encode($body),
         );
 
@@ -41,7 +48,9 @@ class ShopTest extends WebTestCase
 
     private function getRandomManager()
     {
-        $this->client->request('GET', '/manager/list');
+        $this->client->request('GET', '/manager/list', [], [], [
+            'Authorization' => 'Bearer '.self::BEARER,
+        ]);
         $response = $this->client->getResponse();
         $responseData = json_decode($response->getContent());
 
