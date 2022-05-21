@@ -55,21 +55,24 @@ class ProductRepository extends ServiceEntityRepository
                 'pa'
             )
             ->leftJoin('pa.shop', 's')
-            ->setParameter('availabilityMin', $productFilter->getAvailabilityMin())
-            ->setParameter('availabilityMax', $productFilter->getAvailabilityMax())
             ->groupBy('p');
 
         if (count($productFilter->getShops()) > 0) {
-            $qb->andWhere('s.id IN (:shopIds)')
+            $qb
+                ->andWhere('s.id IN (:shopIds)')
                 ->setParameter('shopIds', $productFilter->getShops());
         }
 
         if ($productFilter->getAvailabilityMin()) {
-            $qb->andWhere('pa.availability >= :availabilityMin');
+            $qb
+                ->andWhere('pa.availability >= :availabilityMin')
+                ->setParameter('availabilityMin', $productFilter->getAvailabilityMin());
         }
 
         if ($productFilter->getAvailabilityMax()) {
-            $qb->andWhere('pa.availability <= :availabilityMax');
+            $qb
+                ->andWhere('pa.availability <= :availabilityMax')
+                ->setParameter('availabilityMax', $productFilter->getAvailabilityMax());
         }
 
         return $qb;

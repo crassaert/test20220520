@@ -26,7 +26,7 @@ class ApiEngine
     public function fetchResponse($result, $group): Response
     {
         // Append pagination if paginator set
-        if (Pagerfanta::class === get_class($result)) {
+        if (is_object($result) && Pagerfanta::class === get_class($result)) {
             $result = [
                 'items' => $result,
                 'pagination' => [

@@ -14,6 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/manager', name: 'app_manager_')]
 class ManagerController extends AbstractController
 {
+    /**
+     * List managers
+     *
+     * @param Request           $request
+     * @param ManagerRepository $managerRepository
+     * @param ApiEngine         $apiEngine
+     *
+     * @return Response
+     */
     #[Route('/list', name: 'list')]
     public function list(Request $request, ManagerRepository $managerRepository, ApiEngine $apiEngine): Response
     {

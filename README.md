@@ -8,10 +8,11 @@ To init project for first time, please launch this command into project director
 
     ./test.sh
 
+# Security
+API is secured with a Bearer token header authorization. Please define it within your env with name `BEARER_API_TOKEN`
+
 # Endpoints
-
 ## Create shop
-
 ### POST /shop/create
 
     {
@@ -22,9 +23,7 @@ To init project for first time, please launch this command into project director
 	}
 
 ## Get managers
-
 ### GET /manager/list
-
 #### Response
 
     {
@@ -47,7 +46,6 @@ To init project for first time, please launch this command into project director
     }
 
 ## Get shops
-
 ### GET /shop/list
 
 | name | type | required | description |
@@ -87,9 +85,7 @@ To init project for first time, please launch this command into project director
     }
 
 ## Get products
-
 ### GET /product/list
-
 | name | type | required | description | 
 | -- | -- | -- | -- |
 | `shops` | string | required | Shop ids, separated by comma (eg 11, 23, 45...) |
@@ -123,3 +119,46 @@ To init project for first time, please launch this command into project director
             "total_pages": 1
         }
     }
+
+## Set product availability
+### POST /product/availability
+    [
+        {
+            "shop": 2,
+            "product": 4,
+            "availability": 1123
+        },
+        {
+            "shop": 3,
+            "product": 5,
+            "availability": 13
+        }
+    ]
+
+#### Response :
+    [
+        {
+            "id": 8220,
+            "shop":
+                {
+                    "id": 2
+                },
+            "product":
+                {
+                    "id": 4
+                },
+            "availability": 1123
+        },
+        {
+            "id": 8221,
+            "shop":
+                {
+                    "id": 3
+                },
+            "product": 
+                {
+                    "id": 5
+                },
+            "availability": 13
+        }
+    ]

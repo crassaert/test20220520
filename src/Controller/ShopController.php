@@ -42,6 +42,22 @@ class ShopController extends AbstractController
         return $apiEngine->fetchResponse($shop, 'shop_read');
     }
 
+    /**
+     * List shops
+     *
+     * Available query options :
+     *
+     * lat      | float     | Latitude
+     * lng      | float     | Longitude
+     * radius   | float     | Distance from coords in meters
+     * page     | integer   | Page number
+     *
+     * @param Request        $request
+     * @param ShopRepository $shopRepository
+     * @param ApiEngine      $apiEngine
+     *
+     * @return Response
+     */
     #[Route('/list', name: 'list', methods: ['GET'])]
     public function list(Request $request, ShopRepository $shopRepository, ApiEngine $apiEngine)
     {

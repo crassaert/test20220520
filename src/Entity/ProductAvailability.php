@@ -12,19 +12,21 @@ class ProductAvailability
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['product_availability'])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Shop::class, inversedBy: 'productAvailabilities')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['product_list'])]
+    #[Groups(['product_list', 'product_availability'])]
     private $shop;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'productAvailabilities')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['product_availability'])]
     private $product;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['product_list'])]
+    #[Groups(['product_list', 'product_availability'])]
     private $availability;
 
     public function getId(): ?int
