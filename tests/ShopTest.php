@@ -102,6 +102,9 @@ class ShopTest extends WebTestCase
         }
 
         $this->client->request('POST', '/product/availability', [], [], [], json_encode($inputs));
+
+        $this->assertResponseIsSuccessful();
+        $this->assertJson($this->client->getResponse()->getContent());
     }
 
     private function getRandomProduct()

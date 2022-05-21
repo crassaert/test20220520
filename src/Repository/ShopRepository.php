@@ -66,7 +66,7 @@ class ShopRepository extends ServiceEntityRepository
 
         if (null !== $shopFilter->getLng() && null !== $shopFilter->getLat() && null !== $shopFilter->getRadius()) {
             $qb->having($distanceQuery.' < :distance');
-            $qb->setParameter('distance', $shopFilter->getRadius());
+            $qb->setParameter('distance', $shopFilter->getRadius() / 1000);
         }
 
         return $qb;

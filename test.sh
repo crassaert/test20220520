@@ -23,3 +23,6 @@ docker-compose exec php bin/console --env=test doctrine:fixtures:load --append
 
 # Load app fixtures
 docker-compose exec php bin/console doctrine:fixtures:load --append
+
+# Execute tests
+docker-compose exec php php bin/phpunit tests/ShopTest.php
