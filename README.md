@@ -3,10 +3,12 @@
 Client API to create new shops and retrieve products regarding some filters.
 
 # Usage
-
+## Project init
 To init project for first time, please launch this command into project directory :
 
     ./test.sh
+## Launch tests
+    docker-compose exec php php bin/phpunit tests/ShopTest.php
 
 # Security
 API is secured with a Bearer token header authorization. Please define it within your env with name `BEARER_API_TOKEN`
@@ -14,13 +16,27 @@ API is secured with a Bearer token header authorization. Please define it within
 # Endpoints
 ## Create shop
 ### POST /shop/create
-
     {
-	    name: 'test', 	// shop name
-	    manager: 11, 	// manager id
-	    lat: 23.34322, 	// latitude
-	    lng: 23.245533 	// longitude
-	}
+      "name": "test",
+      "manager": 1,
+      "postalAddress": "123 Boulevard de Port-Royal, Paris",
+      "lat": 48.8385239,
+      "lng": 2.3351036
+    }
+#### Response
+    {
+      "id": 31,
+      "name": "test",
+      "lat": "48.8385239",
+      "lng": "2.3351036",
+      "postalAddress": "123 Boulevard de Port-Royal, Paris",
+      "manager":
+        {
+          "id": 1,
+          "firstName": "Rosalia",
+          "lastName": "Parisian"
+        }
+    }
 
 ## Get managers
 ### GET /manager/list
@@ -58,30 +74,30 @@ API is secured with a Bearer token header authorization. Please define it within
 
 #### Response :
     {
-        items:
-            [
-                {
-                    "id": 91,
-                    "name": "Marques Zemlak",
-                    "lat": "-39.2844670000000000",
-                    "lng": "-96.7915560000000000",
-                    "postalAddress": "83597 Mattie Stream\nNorth Kallieton, MA 23584-1875",
-                    "manager": {
-                        "id": 38,
-                        "firstName": "Ellis",
-                        "lastName": "Greenfelder"
-                    }
-                },
+      items:
+        [
+          {
+            "id": 91,
+            "name": "Marques Zemlak",
+            "lat": "-39.2844670000000000",
+            "lng": "-96.7915560000000000",
+            "postalAddress": "83597 Mattie Stream\nNorth Kallieton, MA 23584-1875",
+            "manager": {
+              "id": 38,
+              "firstName": "Ellis",
+              "lastName": "Greenfelder"
+              }
+            },
             ...
         ],
-        "pagination": {
-            "current_page": 1,
-            "has_previous_page": false,
-            "has_next_page": false,
-            "per_page": 10,
-            "total_items": 10,
-            "total_pages": 1
-        }
+      "pagination": {
+        "current_page": 1,
+        "has_previous_page": false,
+        "has_next_page": false,
+        "per_page": 10,
+        "total_items": 10,
+        "total_pages": 1
+      }
     }
 
 ## Get products
@@ -95,70 +111,66 @@ API is secured with a Bearer token header authorization. Please define it within
 #### Response :
 
     items: {
-        [
-            {
-                id: 42          // product id
-                name: 'test', 	// product name
-                manager: 11, 	// manager id
-                productAvailabilities: [
-                    shop: {
-                        id: 14,
-                        name: 'Shop name'
-                   ),
-                    availability: 23
-                ]
-            } 
+      [
+        {
+          id: 42          // product id
+          name: 'test', 	// product name
+          manager: 11, 	// manager id
+          productAvailabilities: [
+            shop: {
+              id: 14,
+              name: 'Shop name'
+            ),
+            availability: 23
+          ]
+        } 
         ...
         ],
-        "pagination": {
-            "current_page": 1,
-            "has_previous_page": false,
-            "has_next_page": false,
-            "per_page": 10,
-            "total_items": 10,
-            "total_pages": 1
-        }
+      "pagination": {
+        "current_page": 1,
+        "has_previous_page": false,
+        "has_next_page": false,
+        "per_page": 10,
+        "total_items": 10,
+        "total_pages": 1
+      }
     }
 
 ## Set product availability
 ### POST /product/availability
     [
-        {
-            "shop": 2,
-            "product": 4,
-            "availability": 1123
-        },
-        {
-            "shop": 3,
-            "product": 5,
-            "availability": 13
-        }
+      {
+        "shop": 2,
+        "product": 4,
+        "availability": 1123
+      },
+      {
+        "shop": 3,
+        "product": 5,
+        "availability": 13
+      }
     ]
 
 #### Response :
     [
-        {
-            "id": 8220,
-            "shop":
-                {
-                    "id": 2
-                },
-            "product":
-                {
-                    "id": 4
-                },
-            "availability": 1123
-        },
-        {
-            "id": 8221,
-            "shop":
-                {
-                    "id": 3
-                },
-            "product": 
-                {
-                    "id": 5
-                },
-            "availability": 13
-        }
+      {
+        "id": 8220,
+        "shop": {
+            "id": 2
+          },
+        "product": {
+            "id": 4
+          },
+        "availability": 1123
+      },
+      {
+        "id": 8221,
+        "shop": {
+            "id": 3
+          },
+        "product": {
+            "id": 5
+          },
+        "availability": 13
+      }
     ]
